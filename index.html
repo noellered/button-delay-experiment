@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Button Click Experiment</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+        transition: background-color 0.1s;
+      }
+
+      .flash {
+        background-color: white !important;
+      }
+
+      button {
+        padding: 20px 40px;
+        font-size: 24px;
+        border: none;
+        border-radius: 8px;
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.1s;
+      }
+
+      button:active {
+        transform: scale(0.95);
+      }
+    </style>
+  </head>
+  <body>
+    <button id="clickButton">Click Me!</button>
+
+    <script>
+      const button = document.getElementById("clickButton");
+      const body = document.body;
+      let clickCount = 0;
+      let currentDelay = 0;
+
+      const audioContext = new (window.AudioContext ||
+        window.webkitAudioContext)();
+
+      function playClickSound() {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        oscillator.type = "sine";
+        oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + 0.1);
+      }
+
+      function flashScreen() {
+        body.classList.add("flash");
+        playClickSound();
+
+        setTimeout(() => {
+          body.classList.remove("flash");
+        }, 100);
+      }
+
+      button.addEventListener("click", () => {
+        clickCount++;
+
+        if (clickCount % 5 === 0) {
+          currentDelay += 10;
+          console.log("Current Delay:", currentDelay);
+          if (currentDelay > 200) {
+            currentDelay = 0;
+            console.log("Resetting Delay");
+          }
+        }
+
+        setTimeout(flashScreen, currentDelay);
+      });
+    </script>
+  </body>
+</html>
