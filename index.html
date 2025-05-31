@@ -4,87 +4,54 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Button Click Experiment</title>
-    <style>
-      body {
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #f0f0f0;
-        transition: background-color 0.1s;
-      }
-
-      .flash {
-        background-color: white !important;
-      }
-
-      button {
-        padding: 20px 40px;
-        font-size: 24px;
-        border: none;
-        border-radius: 8px;
-        background-color: #4caf50;
-        color: white;
-        cursor: pointer;
-        transition: transform 0.1s;
-      }
-
-      button:active {
-        transform: scale(0.95);
-      }
-    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <button id="clickButton">Click Me!</button>
+    <div class="container">
+      <button id="clickButton">Click Me</button>
 
-    <script>
-      const button = document.getElementById("clickButton");
-      const body = document.body;
-      let clickCount = 0;
-      let currentDelay = 0;
+      <button id="settingsButton" class="settings-button" title="Settings">
+        <i class="fas fa-cog"></i>
+        <span class="settings-text">⚙️</span>
+      </button>
 
-      const audioContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
-
-      function playClickSound() {
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-
-        oscillator.type = "sine";
-        oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
-        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-
-        oscillator.start();
-        oscillator.stop(audioContext.currentTime + 0.1);
-      }
-
-      function flashScreen() {
-        body.classList.add("flash");
-        playClickSound();
-
-        setTimeout(() => {
-          body.classList.remove("flash");
-        }, 100);
-      }
-
-      button.addEventListener("click", () => {
-        clickCount++;
-
-        if (clickCount % 5 === 0) {
-          currentDelay += 10;
-          console.log("Current Delay:", currentDelay);
-          if (currentDelay > 200) {
-            currentDelay = 0;
-            console.log("Resetting Delay");
-          }
-        }
-
-        setTimeout(flashScreen, currentDelay);
-      });
-    </script>
+      <div id="settingsPopup" class="settings-popup">
+        <div class="settings-content">
+          <h2>Settings</h2>
+          <div class="config-item">
+            <label for="delayIncrement">Delay Increment (ms):</label>
+            <input
+              type="number"
+              id="delayIncrement"
+              value="10"
+              min="1"
+              max="1000"
+            />
+          </div>
+          <div class="config-item">
+            <label for="clicksBeforeDelay">Clicks Before Delay Increase:</label>
+            <input
+              type="number"
+              id="clicksBeforeDelay"
+              value="5"
+              min="1"
+              max="100"
+            />
+          </div>
+          <div class="config-item">
+            <label for="maxDelay">Maximum Delay (ms):</label>
+            <input type="number" id="maxDelay" value="200" min="1" max="5000" />
+          </div>
+          <button id="resetButton" class="reset-button">
+            <i class="fas fa-undo"></i> Reset to Defaults
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
   </body>
 </html>
