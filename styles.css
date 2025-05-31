@@ -5,7 +5,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0;
+  background-color: #d8d8d8;
   transition: background-color 0.1s;
 }
 
@@ -16,10 +16,16 @@ body {
   align-items: center;
 }
 
-.settings-button {
+.floating-buttons {
   position: fixed;
   bottom: 20px;
   right: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.floating-button {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -33,21 +39,20 @@ body {
   font-size: 24px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s, background-color 0.2s;
-  z-index: 1000;
   padding: 0;
 }
 
-.settings-text {
-  display: none;
-}
-
-.settings-button:hover {
+.floating-button:hover {
   transform: scale(1.1);
   background-color: #2f62b9;
 }
 
-.settings-button.active {
+.floating-button.active {
   transform: rotate(45deg);
+}
+
+.settings-text {
+  display: none;
 }
 
 .settings-popup {
@@ -156,9 +161,10 @@ button {
   color: white;
   cursor: pointer;
   transition: transform 0.1s;
-  &:hover {
-    background-color: #2f62b9;
-  }
+}
+
+button:hover {
+  background-color: #2f62b9;
 }
 
 button:active {

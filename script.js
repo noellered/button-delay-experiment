@@ -2,6 +2,7 @@ const button = document.getElementById("clickButton");
 const body = document.body;
 let clickCount = 0;
 let currentDelay = 0;
+let soundEnabled = true;
 
 // Configuration elements
 const delayIncrementInput = document.getElementById("delayIncrement");
@@ -10,6 +11,7 @@ const maxDelayInput = document.getElementById("maxDelay");
 const settingsButton = document.getElementById("settingsButton");
 const settingsPopup = document.getElementById("settingsPopup");
 const resetButton = document.getElementById("resetButton");
+const soundButton = document.getElementById("soundButton");
 
 // Default values
 const DEFAULT_VALUES = {
@@ -21,6 +23,8 @@ const DEFAULT_VALUES = {
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
 function playClickSound() {
+  if (!soundEnabled) return;
+
   const oscillator = audioContext.createOscillator();
   const gainNode = audioContext.createGain();
 
@@ -65,6 +69,12 @@ function toggleSettings(event) {
   settingsPopup.classList.toggle("visible");
 }
 
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  const icon = soundButton.querySelector("i");
+  icon.className = soundEnabled ? "fas fa-volume-up" : "fas fa-volume-mute";
+}
+
 // Close settings when clicking outside
 document.addEventListener("click", (event) => {
   if (
@@ -83,6 +93,7 @@ settingsPopup.addEventListener("click", (event) => {
 
 settingsButton.addEventListener("click", toggleSettings);
 resetButton.addEventListener("click", resetToDefaults);
+soundButton.addEventListener("click", toggleSound);
 
 button.addEventListener("click", () => {
   clickCount++;
