@@ -23,7 +23,7 @@ body {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: #4caf50;
+  background-color: #3d73d0;
   border: none;
   color: white;
   cursor: pointer;
@@ -43,7 +43,7 @@ body {
 
 .settings-button:hover {
   transform: scale(1.1);
-  background-color: #45a049;
+  background-color: #2f62b9;
 }
 
 .settings-button.active {
@@ -115,7 +115,7 @@ body {
 
 .config-item input:focus {
   outline: none;
-  border-color: #4caf50;
+  border-color: #3d73d0;
 }
 
 .reset-button {
@@ -152,10 +152,13 @@ button {
   font-size: 24px;
   border: none;
   border-radius: 8px;
-  background-color: #4caf50;
+  background-color: #3d73d0;
   color: white;
   cursor: pointer;
   transition: transform 0.1s;
+  &:hover {
+    background-color: #2f62b9;
+  }
 }
 
 button:active {
