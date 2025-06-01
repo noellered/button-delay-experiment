@@ -4,7 +4,6 @@ let clickCount = 0;
 let currentDelay = 0;
 let soundEnabled = true;
 
-// Configuration elements
 const delayIncrementInput = document.getElementById("delayIncrement");
 const clicksBeforeDelayInput = document.getElementById("clicksBeforeDelay");
 const maxDelayInput = document.getElementById("maxDelay");
@@ -13,7 +12,6 @@ const settingsPopup = document.getElementById("settingsPopup");
 const resetButton = document.getElementById("resetButton");
 const soundButton = document.getElementById("soundButton");
 
-// Default values
 const DEFAULT_VALUES = {
   delayIncrement: 10,
   clicksBeforeDelay: 5,
@@ -86,7 +84,6 @@ document.addEventListener("click", (event) => {
   }
 });
 
-// Prevent clicks inside the popup from closing it
 settingsPopup.addEventListener("click", (event) => {
   event.stopPropagation();
 });
